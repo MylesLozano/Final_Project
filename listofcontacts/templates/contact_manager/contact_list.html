@@ -15,6 +15,7 @@
             <h5 class="card-title">{{ contact.name }}</h5>
             <p class="card-text">Email: {{ contact.email }}</p>
             <p class="card-text">Contact No.: {{ contact.phone }}</p>
+            <p class="card-text">Address: {{ contact.address }}</p>
             <a class="btn btn-sm btn-secondary" href="{% url 'contact_update' contact.pk %}">Edit</a>
             <a class="btn btn-sm btn-danger" href="{% url 'contact_delete' contact.pk %}">Delete</a>
           </div>
