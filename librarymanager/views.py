@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book
 from .forms import BookForm
+import os
 
 # Create your views here.
 def book_list(request):
@@ -20,8 +21,12 @@ def book_create(request):
 def book_update(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
+        form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
+            if 'image' in request.FILES or 'image-clear' in request.POST:
+                if book.image:
+                    if os.path.isfile(book.image.path):
+                        os.remove(book.image.path)
             form.save()
             return redirect('book_list')
     else:

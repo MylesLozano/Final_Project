@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact
 from .forms import ContactForm
+import os
 
 # Create your views here.
 def contact_list(request):
@@ -20,8 +21,14 @@ def contact_create(request):
 def contact_update(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
-        form = ContactForm(request.POST, instance=contact)
+        form = ContactForm(request.POST, request.FILES, instance=contact)
         if form.is_valid():
+            if 'profile_image' in request.FILES or 'profile_image-clear' in request.POST:
+                # Handle the old image deletion
+                if contact.profile_image:
+                    if os.path.isfile(contact.profile_image.path):
+                        os.remove(contact.profile_image.path)
+            contact.profile_image = request.FILES.get('profile_image', contact.profile_image)
             form.save()
             return redirect('contact_list')
     else:

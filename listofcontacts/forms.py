@@ -6,5 +6,5 @@ class ContactForm(forms.ModelForm):
         model = Contact
         fields = ['name', 'profile_image', 'email', 'phone', 'address']
         widgets = {
-            'address': forms.Textarea(attrs={'rows': 2, 'cols': 30}),
+            'address': forms.Textarea(attrs={'rows': 4}),
         }
