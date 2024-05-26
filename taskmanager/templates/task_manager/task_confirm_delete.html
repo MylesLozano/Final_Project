@@ -1,0 +1,9 @@
+{% extends "layout.html" %} {% block title %}Confirm Delete{% endblock %}
+<!--Separator Comment-->{%block content %}
+<h2 class="mb-3">Confirm Delete</h2>
+<p>Are you sure you want to delete "{{ task.title }}"?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Yes, delete</button>
+</form>
+{% endblock %}
